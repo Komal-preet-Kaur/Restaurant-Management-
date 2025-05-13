@@ -4,6 +4,7 @@ const fs = require('fs');
 const router = express.Router();
 const Reservation = require('../models/reservation');
 const User = require('../models/User');
+const Contact = require('../models/Contact');
 
 // Shared homepage content
 const homepageContent = {
@@ -124,6 +125,27 @@ router.get('/privacy', (req, res) => {
   res.render('privacypolicy', {
     showAuthLinks: false
   });
+});
+
+// POST: Contact form submission
+router.post('/contact', async (req, res) => {
+  const { firstName, lastName, email, phoneNumber, message } = req.body;
+
+  try {
+    const newContact = new Contact({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      message
+    });
+
+    await newContact.save();
+    res.render('contactSuccess');
+  } catch (error) {
+    console.error('Contact form submission error:', error);
+    res.status(500).send('Failed to submit contact form. Please try again.');
+  }
 });
 
 // GET: Explore Restaurants
