@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -13,15 +12,14 @@ const errorHandler = require('./middlewares/errorHandler');
 const apiRoutes = require('./api/apiRoutes');
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/Reservation';
 
 // MongoDB connection
 async function main() {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/Reservation', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(MONGO_URI);
     console.log(' Connected to MongoDB');
   } catch (err) {
     console.error(' MongoDB connection error:', err);
@@ -29,60 +27,39 @@ async function main() {
 }
 main();
 
-// View engine setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
 // Global middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: CLIENT_URL,
+  credentials: true
+}));
 app.use(helmet());
 app.use(compression());
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Session middleware
 app.use(session({
-  secret: 'your-secret-key', // Replace with environment variable in production
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Use true if using HTTPS
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    sameSite: 'lax'
+  }
 }));
-
-// Attach username globally to all views
-app.use((req, res, next) => {
-  res.locals.username = req.session?.user?.username || null;
-  next();
-});
 
 // Custom logger middleware
 app.use(logger);
 
-// Static view routes
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/breakfast', (req, res) => {
-  res.render('breakfast');
-});
-
-app.get('/appetiser', (req, res) => {
-  res.render('appetiser');
-});
-
-app.get('/beverage', (req, res) => {
-  res.render('beverage');
-});
-
 // API routes
-app.use('/', apiRoutes);
+app.use('/api', apiRoutes);
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).render('404', { message: 'Page Not Found' });
+  res.status(404).json({ error: 'Route not found' });
 });
 
 // Global error handler

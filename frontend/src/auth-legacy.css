@@ -1,0 +1,205 @@
+.auth-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #23242a url('/images/PIC3.jpg') center/cover no-repeat;
+}
+
+.auth-page-wrapper * {
+  font-family: 'Poppins', sans-serif;
+}
+
+.auth-page-wrapper .box {
+  position: relative;
+  width: 370px;
+  height: 450px;
+  background: #1c1c1c;
+  border-radius: 50px 5px;
+  overflow: hidden;
+}
+
+.auth-page-wrapper .box::before,
+.auth-page-wrapper .box::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 370px;
+  height: 450px;
+  background: linear-gradient(60deg, transparent, #c59246, #d9138a);
+  transform-origin: bottom right;
+  animation: authRotate 6s linear infinite;
+}
+
+.auth-page-wrapper .box::after {
+  animation-delay: -3s;
+}
+
+@keyframes authRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.auth-page-wrapper .form {
+  position: absolute;
+  inset: 2px;
+  border-radius: 50px 5px;
+  background: #28292d;
+  z-index: 10;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-page-wrapper .form h2 {
+  color: #e4c494;
+  font-size: 35px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.auth-page-wrapper .inputBox {
+  position: relative;
+  width: 300px;
+  margin-top: 35px;
+}
+
+.auth-page-wrapper .inputBox input {
+  width: 100%;
+  padding: 20px 10px 10px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #1f2937;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  z-index: 10;
+  caret-color: #1f2937;
+  position: relative;
+}
+
+.auth-page-wrapper input[type='submit'] {
+  font-size: 20px;
+  border: none;
+  outline: none;
+  background: #e4c494;
+  padding: 5px;
+  margin-top: 40px;
+  border-radius: 90px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-page-wrapper input[type='submit']:hover {
+  background: linear-gradient(90deg, #e4c494, #d9138a);
+  color: #1c1c1c;
+}
+
+.auth-page-wrapper .inputBox span {
+  position: absolute;
+  left: 0;
+  padding: 20px 10px 10px;
+  color: #e4c494;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+}
+
+.auth-page-wrapper .inputBox i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #e4c494;
+  border-radius: 4px;
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 9;
+}
+
+.auth-page-wrapper .inputBox input:valid ~ span,
+.auth-page-wrapper .inputBox input:focus ~ span {
+  transform: translateX(-10px) translateY(-34px);
+  font-size: 0.75em;
+}
+
+.auth-page-wrapper .inputBox input:valid ~ i,
+.auth-page-wrapper .inputBox input:focus ~ i {
+  height: 44px;
+}
+
+.auth-page-wrapper .inputBox input:focus,
+.auth-page-wrapper .inputBox input:valid {
+  color: #111827;
+}
+
+/* Keep text visible for browser autofill cases */
+.auth-page-wrapper .inputBox input:-webkit-autofill,
+.auth-page-wrapper .inputBox input:-webkit-autofill:hover,
+.auth-page-wrapper .inputBox input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #111827;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.auth-page-wrapper .links a {
+  color: #e4c494;
+  text-decoration: none;
+}
+
+.auth-page-wrapper .form form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.auth-page-wrapper .error {
+  color: #ff7b7b;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.auth-page-wrapper .links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.auth-page-wrapper .links a {
+  font-size: 0.9rem;
+  color: #cfcfcf;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.auth-page-wrapper .links a:hover {
+  color: #e4c494;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .auth-page-wrapper .box {
+    width: 92%;
+    max-width: 370px;
+    height: auto;
+    min-height: 450px;
+  }
+
+  .auth-page-wrapper .form {
+    padding: 24px 20px;
+  }
+
+  .auth-page-wrapper .inputBox {
+    width: 100%;
+  }
+
+  .auth-page-wrapper .links {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

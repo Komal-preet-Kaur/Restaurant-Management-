@@ -1,0 +1,50 @@
+/* Small overrides to preserve legacy layout on mobile in SPA */
+@media (max-width: 900px) {
+  .navbar {
+    height: auto;
+    padding: 10px;
+  }
+
+  .navbar-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar-left ul,
+  .nav-auth {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .reservation-form {
+    margin: 30px auto;
+    width: 92%;
+  }
+
+  .form-group {
+    flex-direction: column;
+  }
+
+  .container-res {
+    padding: 12px;
+  }
+
+  .restaurant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .story-container-image img {
+    width: 100%;
+    height: auto;
+  }
+}
