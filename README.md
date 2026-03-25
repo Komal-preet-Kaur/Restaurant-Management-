@@ -86,12 +86,6 @@ npm run dev
 
 ---
 
-## 📸 Screenshots
-
-(Add screenshots here later)
-
----
-
 ## 🚧 Future Improvements
 
 * Admin dashboard
